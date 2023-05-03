@@ -248,6 +248,11 @@ namespace Randomizer
                     continue;
 
                 Item item = RandomItemLibrary.Randomize(random, drop.ItemRef, RestrictSameCategory.Value);
+
+                //skip non sellable items
+                if (!item.IsSellable || item.RawBaseValue == 0)
+                    continue;
+
                 DebugTrace($"Generated: {item.Name} ({item.ItemID}) for {drop.ItemRef.Name} ({drop.ItemRef.ItemID})");
                 RandomItemLibrary.ClampDropAmount(drop, item);
                 drop.ItemID = item.ItemID;
